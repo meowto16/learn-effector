@@ -16,6 +16,7 @@ module.exports = {
     },
     mode: 'development',
     devServer: {},
+    devtool: 'inline-source-map',
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Learn Effector',
@@ -23,5 +24,31 @@ module.exports = {
         }),
         new HtmlWebpackLiveReloadPlugin(),
         new CleanWebpackPlugin(),
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.(js)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            },
+
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            localsConvention: 'camelCase',
+                            sourceMap: true
+                        }
+                    }
+                ]
+            }
+        ]
+    },
 }
