@@ -1,8 +1,14 @@
 import React from 'react';
+import TodoList from './components/Todo/TodoList'
+import TodoControl from './components/Todo/TodoControl'
 
 const App = () => {
   return (
-    <h1>Hi from react!</h1>
+    <div>
+      <h1>TodoList example on effector</h1>
+      <TodoControl />
+      <TodoList />
+    </div>
   );
 };
 
