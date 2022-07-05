@@ -1,27 +1,23 @@
 import React, { useId } from 'react'
-import { addTodo } from '../../models/todos'
+
+import { submit, changed, $todo } from '../../models/todos'
+import {useStore} from "effector-react";
 
 const TodoControl = () => {
   const formId = useId()
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    const form = document[formId]
-    const name = form['todo-name'].value
-
-    addTodo({
-      name
-    })
-
-    form.reset()
-  }
+  const value = useStore($todo);
 
   return (
     <div>
-      <form name={formId} onSubmit={handleSubmit}>
-        <input name="todo-name" type="text" />
-        <input type="submit" value="Создать" />
+      <form name={formId}>
+        <input
+            name="todo-name"
+            type="text"
+            onChange={e => changed(e.target.value)}
+            value={value}
+        />
+        <button onClick={submit}>Создать</button>
       </form>
     </div>
   )

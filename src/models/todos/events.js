@@ -1,5 +1,7 @@
 import { createEvent } from 'effector'
 
-export const addTodo = createEvent()
-export const removeTodo = createEvent()
-export const toggleCompleteTodo = createEvent()
+export const changed = createEvent()
+export const remove = createEvent()
+export const toggle = createEvent()
+export const submit = createEvent()
+export const submitted = createEvent()

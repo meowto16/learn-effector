@@ -1,16 +1,18 @@
 import { v4 as uuid } from 'uuid';
+import { sample } from 'effector'
 
-import { $todos } from './store'
-import { addTodo, removeTodo, toggleCompleteTodo } from './events'
+import { $todo, $todos } from './store'
+import { submitted, remove, toggle, submit } from './events'
+import { validateFx } from "./effects"
 
 $todos
-  .on(addTodo, (todos, payload) => {
+  .on(submitted, (todos, name) => {
     return [
       ...todos,
-      { id: uuid(), name: payload.name, completed: false },
+      { id: uuid(), name, completed: false },
     ]
   })
-  .on(toggleCompleteTodo, (todos, payload) => {
+  .on(toggle, (todos, payload) => {
     return todos.map(todo => {
       if (todo.id === payload.id) {
         return {
@@ -22,6 +24,20 @@ $todos
       return todo
     })
   })
-  .on(removeTodo, (todos, payload) => {
+  .on(remove, (todos, payload) => {
     return todos.filter(todo => todo.id !== payload.id)
   })
+
+sample({
+  clock: submit,
+  source: [$todo, $todos],
+  target: validateFx,
+})
+
+sample({
+  clock: validateFx.done,
+  source: $todo,
+  target: submitted,
+})
+
+submit.watch(e => e.preventDefault())
