@@ -1,5 +1,6 @@
 import React from 'react'
-import {$filter, FILTER_STATUS, filterChanged} from "../../models/todos";
+import {$filter, filterChanged} from "../../models/todos/model";
+import { FILTER_STATUS } from '../../models/todos/constants'
 import {useStore} from "effector-react";
 
 const TodoFilter = () => {

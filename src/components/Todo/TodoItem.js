@@ -1,7 +1,6 @@
 import React from 'react'
-import { remove as removeTodo, toggle as toggleCompleteTodo } from '../../models/todos'
 
-const TodoItem = ({ id, name, completed }) => {
+const TodoItem = ({ name, completed }) => {
   return (
     <div style={{
         display: 'grid',
@@ -11,8 +10,8 @@ const TodoItem = ({ id, name, completed }) => {
         padding: '15px'
     }}>
       <p>{name}</p>
-      <input type="checkbox" onChange={() => toggleCompleteTodo({ id })} checked={completed} />
-      <button onClick={() => removeTodo({ id })}>X</button>
+      <input readOnly type="checkbox" checked={completed} />
+      <button>X</button>
     </div>
   )
 }
