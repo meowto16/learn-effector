@@ -1,5 +1,8 @@
-import {attach, createEvent, createEffect, forward, createStore, restore, merge} from "effector";
+import { attach, createEvent, createEffect, forward, createStore, restore, merge, combine } from "effector";
+
 import {fetchTodos} from "../../services/todos";
+import {fetchUsers} from "../../services/users";
+
 import {COMPLETED_FILTER, TODOS_LIMIT_PER_RESPONSE} from "./constants";
 
 export const todosPageMounted = createEvent()
@@ -7,10 +10,24 @@ export const filterChanged = createEvent()
 export const pageChanged = createEvent()
 
 export const $todos = createStore([])
+export const $users = createStore([])
 export const $page = createStore(1).reset(filterChanged)
 export const $filter = restore(filterChanged, COMPLETED_FILTER.ALL)
 
+export const $todosMapped = combine([$todos, $users], ([todos, users]) => {
+  if (!todos.length || !users.length) return []
+
+  return todos.map((todo) => ({
+    id: todo.id,
+    name: todo.title,
+    completed: todo.completed,
+    user: users[todo.userId] || null,
+  }))
+})
+
 export const fetchTodosFx = createEffect(fetchTodos)
+export const fetchUsersFx = createEffect(fetchUsers)
+
 export const fetchTodosWithParamsFx = attach({
   effect: fetchTodosFx,
   source: [$page, $filter],
@@ -25,15 +42,15 @@ export const fetchTodosWithParamsFx = attach({
   }
 })
 
-$todos.on(fetchTodosFx.doneData, (todos, response) => {
-  return response.map((item) => ({
-    id: item.id,
-    name: item.title,
-    completed: item.completed,
-  }))
-})
+$todos.on(fetchTodosFx.doneData, (_, response) => response)
+$users.on(fetchUsersFx.doneData, (_, response) => response)
 
 $page.on(pageChanged, (_, page) => page)
+
+forward({
+  from: todosPageMounted,
+  to: fetchUsersFx
+})
 
 forward({
   from: merge([todosPageMounted, filterChanged, pageChanged]),
