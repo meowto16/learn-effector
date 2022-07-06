@@ -1,6 +1,6 @@
 import { createStore, restore } from 'effector'
 import { changed, submitted } from "./events"
-import {validateFx} from "./effects";
+import { validateFx } from "./effects";
 
 export const $todos = createStore([])
 export const $todo = restore(changed, '').reset(submitted)

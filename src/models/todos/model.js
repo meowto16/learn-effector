@@ -3,7 +3,7 @@ import { sample } from 'effector'
 
 import { $todo, $todos } from './store'
 import { submitted, remove, toggle, submit } from './events'
-import { validateFx } from "./effects"
+import {fetchTodosFx, validateFx} from "./effects"
 
 $todos
   .on(submitted, (todos, name) => {
@@ -26,6 +26,16 @@ $todos
   })
   .on(remove, (todos, payload) => {
     return todos.filter(todo => todo.id !== payload.id)
+  })
+  .on(fetchTodosFx.doneData, (todos, response) => {
+    return [
+        ...todos,
+        ...(response.map((item) => ({
+          id: item.id,
+          name: item.title,
+          completed: item.completed,
+        })))
+    ]
   })
 
 sample({
