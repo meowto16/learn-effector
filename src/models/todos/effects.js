@@ -1,7 +1,10 @@
 import { createEffect } from "effector"
 
-export const fetchTodosFx = createEffect(async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+export const fetchTodosFx = createEffect(async (params) => {
+    const url = 'https://jsonplaceholder.typicode.com/todos'
+    const searchParams = new URLSearchParams(params || {})
+    const query = searchParams.toString() ? `?${searchParams.toString()}` : ''
+    const response = await fetch(url + query)
 
     return response.json()
 })
