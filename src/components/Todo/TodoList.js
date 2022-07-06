@@ -22,7 +22,7 @@ const TodoList = () => {
   }
 
   return (
-    <div>
+    <div style={{ display: 'grid', gridTemplateColumns: '200px 200px 200px', gridGap: '15px' }}>
       {!todos.length && 'No todos here!'}
       {!!todos.length && todosList}
     </div>

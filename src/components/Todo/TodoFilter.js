@@ -7,7 +7,7 @@ const TodoFilter = () => {
     const filters = Object.values(FILTER_STATUS)
 
     return (
-        <div>
+        <div style={{ display: 'grid', gridGap: '15px', gridTemplateColumns: '1fr 1fr 1fr', maxWidth: '400px' }}>
             {filters.map((filter) => (
                 <label key={filter} >
                     <p>{filter}</p>

@@ -7,7 +7,6 @@ const TodoItem = ({ id, name, completed }) => {
         display: 'grid',
         gridTemplateColumns: '1fr 20px',
         gridGap: '15px',
-        maxWidth: '100px',
         border: '1px solid black',
         padding: '15px'
     }}>
