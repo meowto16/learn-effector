@@ -8,7 +8,7 @@ const PATH_SRC = path.resolve(__dirname, 'src')
 const DIST_SRC = path.resolve(__dirname, 'dist')
 
 module.exports = {
-    entry: path.resolve(PATH_SRC, 'model.js'),
+    entry: path.resolve(PATH_SRC, 'index.js'),
     output: {
         path: DIST_SRC,
         filename: 'index.min.js',

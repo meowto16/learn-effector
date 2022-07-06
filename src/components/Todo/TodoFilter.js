@@ -1,11 +1,12 @@
 import React from 'react'
-import {$filter, filterChanged} from "../../models/todos/model";
-import { FILTER_STATUS } from '../../models/todos/constants'
 import {useStore} from "effector-react";
+
+import {$filter, filterChanged} from "../../models/todos/model";
+import { COMPLETED_FILTER } from '../../models/todos/constants'
 
 const TodoFilter = () => {
     const currentFilter = useStore($filter)
-    const filters = Object.values(FILTER_STATUS)
+    const filters = Object.values(COMPLETED_FILTER)
 
     return (
         <div style={{ display: 'grid', gridGap: '15px', gridTemplateColumns: '1fr 1fr 1fr', maxWidth: '400px' }}>

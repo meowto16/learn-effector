@@ -1,11 +1,10 @@
 import React from 'react'
 import { useList, useStore } from 'effector-react'
 
-import {$todos, todosPageMounted} from '../../models/todos/model'
+import { $todos, todosPageMounted, fetchTodosFx } from '../../models/todos/model'
+import {useMount} from "../../hooks/useMount";
 
 import TodoItem from './TodoItem'
-import {useMount} from "../../hooks/useMount";
-import {fetchTodosFx} from "../../models/todos/model";
 
 const TodoList = () => {
   const todos = useStore($todos)
