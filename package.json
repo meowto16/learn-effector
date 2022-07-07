@@ -12,6 +12,7 @@
   "dependencies": {
     "effector": "^22.3.0",
     "effector-react": "^22.0.6",
+    "effector-storage": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "serve": "^13.0.2",

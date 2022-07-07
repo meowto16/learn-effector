@@ -1,4 +1,5 @@
 import { attach, createEvent, createEffect, forward, createStore, restore, merge, combine } from "effector";
+import { persist } from 'effector-storage/query'
 
 import {fetchTodos} from "../../services/todos";
 import {fetchUsers} from "../../services/users";
@@ -11,8 +12,12 @@ export const pageChanged = createEvent()
 
 export const $todos = createStore([])
 export const $users = createStore([])
-export const $page = createStore(1).reset(filterChanged)
+
+export const $page = createStore('1').reset(filterChanged)
+persist({ store: $page, key: 'page' })
+
 export const $filter = restore(filterChanged, COMPLETED_FILTER.ALL)
+persist({ store: $filter, key: 'completed' })
 
 export const $todosMapped = combine([$todos, $users], ([todos, users]) => {
   if (!todos.length || !users.length) return []

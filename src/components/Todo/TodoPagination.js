@@ -4,7 +4,7 @@ import {useStore} from "effector-react";
 
 const TodoPagination = () => {
     const currentPage = useStore($page)
-    const pages = [1,2,3,4,5]
+    const pages = ['1', '2', '3', '4', '5']
 
     return (
       <div>
