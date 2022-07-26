@@ -1,8 +1,10 @@
-import { attach, createEvent, createEffect, forward, createStore, restore, merge, combine } from "effector";
+import { attach, createEvent, forward, createStore, restore, merge, combine } from "effector";
 import { persist } from 'effector-storage/query'
 
 import {fetchTodos} from "../../services/todos";
 import {fetchUsers} from "../../services/users";
+
+import { createCachedApiEffect } from '../../lib/effector/createCachedApiEffect'
 
 import {COMPLETED_FILTER, TODOS_LIMIT_PER_RESPONSE} from "./constants";
 
@@ -30,8 +32,8 @@ export const $todosMapped = combine([$todos, $users], ([todos, users]) => {
   }))
 })
 
-export const fetchTodosFx = createEffect(fetchTodos)
-export const fetchUsersFx = createEffect(fetchUsers)
+export const fetchTodosFx = createCachedApiEffect(fetchTodos)
+export const fetchUsersFx = createCachedApiEffect(fetchUsers)
 
 export const fetchTodosWithParamsFx = attach({
   effect: fetchTodosFx,
