@@ -22,6 +22,7 @@ export const $filter = restore(filterChanged, COMPLETED_FILTER.ALL)
 persist({ store: $filter, key: 'completed' })
 
 export const $todosMapped = combine([$todos, $users], ([todos, users]) => {
+  console.log({ todos, users })
   if (!todos.length || !users.length) return []
 
   return todos.map((todo) => ({
@@ -32,8 +33,8 @@ export const $todosMapped = combine([$todos, $users], ([todos, users]) => {
   }))
 })
 
-export const fetchTodosFx = createCachedApiEffect(fetchTodos)
-export const fetchUsersFx = createCachedApiEffect(fetchUsers)
+export const { fx: fetchTodosFx, clearCacheEvent: clearCacheTodosFx } = createCachedApiEffect(fetchTodos)
+export const { fx: fetchUsersFx } = createCachedApiEffect(fetchUsers)
 
 export const fetchTodosWithParamsFx = attach({
   effect: fetchTodosFx,

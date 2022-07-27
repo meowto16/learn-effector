@@ -2,7 +2,6 @@ import { createEffect, createEvent, createStore } from 'effector'
 
 export const createCachedApiEffect = (callback) => {
   const addToCache = createEvent()
-  const removeFromCache = createEvent()
   const clearCache = createEvent()
 
   const request = createEffect()
@@ -12,12 +11,6 @@ export const createCachedApiEffect = (callback) => {
       ...state,
       [payload.key]: payload.value
     }))
-    .on(removeFromCache, (state, payload) => {
-      const entries = Object.entries(state)
-      const filteredEntries = entries.filter(([key]) => key !== payload)
-
-      return Object.fromEntries(filteredEntries)
-    })
     .reset(clearCache)
 
   request.use((params) => {
@@ -40,5 +33,8 @@ export const createCachedApiEffect = (callback) => {
     })
   })
 
-  return request
+  return {
+    fx: request,
+    clearCacheEvent: clearCache,
+  }
 }
